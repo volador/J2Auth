@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- 系统默认injector列表 -->
+<injectors>
+	<injector expectTag="map-string" class="org.j2auth.ioc.inject.MapStringInjector"/>
+	<injector expectTag="map-ref" class="org.j2auth.ioc.inject.MapRefInjector"/>
+	<injector expectTag="list-string" class="org.j2auth.ioc.inject.ListStringInjector"/>
+	<injector expectTag="ref" class="org.j2auth.ioc.inject.RefInjector"/>
+	<injector expectTag="string" class="org.j2auth.ioc.inject.StringInjector"/>
+</injectors>
