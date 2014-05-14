@@ -1,4 +1,4 @@
 J2Auth
 ======
 
-a j2ee auth module in common use.
+一个基于Servlet标准的通用权限框架，妈妈在也不用担心应用的权限控制了。
