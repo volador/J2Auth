@@ -1,6 +1,6 @@
 package org.j2auth.ioc;
 
-import java.io.IOException;  
+import java.io.IOException;   
 import java.io.InputStream;
 import java.util.ArrayList;
 import java.util.HashMap; 
@@ -13,7 +13,6 @@ import javax.xml.parsers.ParserConfigurationException;
 
 import org.j2auth.ioc.inject.Injector;
 import org.j2auth.ioc.inject.InjectorManager;
-import org.j2auth.util.Debug;
 import org.j2auth.util.XPath;
 import org.w3c.dom.Document;
 import org.w3c.dom.Node;
@@ -21,7 +20,7 @@ import org.w3c.dom.NodeList;
 import org.xml.sax.SAXException;
 
 /**
- * 简单的bean管理器,可以用springIOC来替代的
+ * 内置bean管理器
  * @author volador
  *
  */
