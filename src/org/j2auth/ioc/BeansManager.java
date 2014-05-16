@@ -1,6 +1,5 @@
 package org.j2auth.ioc;
 
-import java.io.IOException;   
 import java.io.InputStream;
 import java.util.ArrayList;
 import java.util.HashMap; 
@@ -9,7 +8,6 @@ import java.util.Map;
 
 import javax.xml.parsers.DocumentBuilder;
 import javax.xml.parsers.DocumentBuilderFactory;
-import javax.xml.parsers.ParserConfigurationException;
 
 import org.j2auth.ioc.inject.Injector;
 import org.j2auth.ioc.inject.InjectorManager;
@@ -17,7 +15,6 @@ import org.j2auth.util.XPath;
 import org.w3c.dom.Document;
 import org.w3c.dom.Node;
 import org.w3c.dom.NodeList;
-import org.xml.sax.SAXException;
 
 /**
  * ƒ⁄÷√beanπ‹¿Ì∆˜
@@ -189,11 +186,7 @@ public class BeansManager extends AbstractBeansFactory{
 		try {
 			builder = domFactory.newDocumentBuilder();
 			xmlDoc = builder.parse(config);
-		} catch (ParserConfigurationException e) {
-			throw new RuntimeException("delay init error:can not init producer,check you beans config file.",e);
-		}catch (SAXException e) {
-			throw new RuntimeException("delay init error:can not init producer,check you beans config file.",e);
-		} catch (IOException e) {
+		} catch (Exception e) {
 			throw new RuntimeException("delay init error:can not init producer,check you beans config file.",e);
 		}
 		return xmlDoc;

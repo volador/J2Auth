@@ -6,7 +6,7 @@ import java.util.Map;
 import org.j2auth.util.SaltatoryList;
 
 /**
- * 权限管理器
+ * 权限管理器,负责调用操作者
  * @author volador
  *
  */
@@ -16,7 +16,7 @@ public class AuthManager implements Auth{
 	static Map<String,Step> steps = new LinkedHashMap<String,Step>();
 
 	/**
-	 * 操作责任链实现，内部类方便获取验证者列表
+	 * 操作责任链实现，内部类方便获取操作者列表
 	 * @author volador
 	 *
 	 */

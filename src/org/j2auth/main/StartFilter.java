@@ -52,9 +52,9 @@ public class StartFilter implements Filter {
 			HttpServletRequest req = (HttpServletRequest) request;
 			HttpServletResponse res = (HttpServletResponse) response;
 			HttpSession session = req.getSession(true);
-
+			
 			// 封装请求上下文
-			AuthInfo info = this.authManager.doAuth(createAuthInfo(req,session));
+			AuthInfo info = this.authManager.doAuth(new AuthInfoImpl(req,res));
 			
 			//将authinfo放进session
 			session.setAttribute(AUTH_INFO_NAME_IN_SESSION, info);
@@ -63,10 +63,6 @@ public class StartFilter implements Filter {
 			chain.doFilter(req, res);
 		} else
 			chain.doFilter(request, response);
-	}
-	
-	private AuthInfo createAuthInfo(HttpServletRequest req, HttpSession session){
-		return new AuthInfoImpl(req,session);
 	}
 
 	/**
