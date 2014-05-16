@@ -14,12 +14,20 @@ public interface AuthInfo {
 	 * 获取请求上下文中用户登录的账号
 	 */
 	String getAccount();
-	
-	
 	/**
 	 * 获取某个cookie值
 	 * @param name cookie键
 	 * @return cookie对应的值，若没有则返回空
 	 */
 	String getCookie(String name);
+	/**
+	 * 设置account信息
+	 * @param account 用户account
+	 */
+	void setAccount(String account);
+	/**
+	 * 提供删除cookie的方法
+	 * @param key cookie的key
+	 */
+	void delCookie(String key);
 }
