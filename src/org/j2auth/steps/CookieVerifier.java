@@ -25,6 +25,10 @@ public class CookieVerifier implements Step{
 		this.decoder = decoder;
 	}
 	
+	public void setUserService(UserService userService){
+		this.userService = userService;
+	}
+	
 	@Override
 	public AuthInfo process(AuthInfo info, DutyChain chain) {
 		//如果已经登录，不做处理
