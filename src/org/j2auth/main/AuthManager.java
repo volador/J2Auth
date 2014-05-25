@@ -5,26 +5,14 @@ import java.util.Map;
 
 import org.j2auth.util.SaltatoryList;
 
-/**
- * 权限管理器,负责调用操作者
- * @author volador
- *
- */
 public class AuthManager implements Auth{
 	
-	//责任链中的所有操作者
 	static Map<String,Step> steps = new LinkedHashMap<String,Step>();
 
-	/**
-	 * 操作责任链实现，内部类方便获取操作者列表
-	 * @author volador
-	 *
-	 */
 	private static class ProviderChain implements DutyChain{
 		
 		static SaltatoryList<String,Step> list = new SaltatoryList<String,Step>(steps);
 		
-		//链表当前所处的位置
 		private SaltatoryList.Node<Step> index = list.getHeader().next();
 		
 		@Override

@@ -8,21 +8,9 @@ import java.io.InputStream;
 import java.net.URL;
 import java.util.Map;
 
-/**
- * 加载本地配置文件,默认路径在classpath下<br>
- * <pre>
- * 启动参数:
- * 	config_file_name:启动文件名
- * 	config_file_path:启动参数
- * </pre>
- * @author volador
- *
- */
 public class LocalConfigFileLoader extends AbstractFileLoader{
 	
-	//默认配置文件名
 	private static String BEANS_FILE_NAME = "beans.xml";
-	//默认配置文件路径 :classpath
 	private static String BEANS_FILE_PATH = "";
 	
 	private static final String BEANS_FILE_NAME_KEY = "beans_file_name";

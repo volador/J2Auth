@@ -1,11 +1,7 @@
 package org.j2auth.ioc.fileloader;
 
 import java.util.Map;
-/**
- * 准备好启动参数
- * @author volador
- *
- */
+
 public abstract class AbstractFileLoader implements FileLoader,InitParamsAware{
 	private Map<String,String> initParams;
 	@Override

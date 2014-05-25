@@ -1,13 +1,7 @@
 package org.j2auth.util;
 
-/**
- * 简单加密器:加密规则通过更改字符串里面每个字符的acii码
- * @author volador
- *
- */
 public class SimpleEncoder implements Encoder{
 
-	//每个字符的ACII码+5
 	private int charAciiMove = 1;
 	
 	@Override

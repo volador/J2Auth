@@ -1,39 +1,17 @@
 package org.j2auth.util;
 
-/**
- * 用于反射操作的工具类
- * 
- * @author volador
- * 
- */
 public class ReflectUtil {
-	/**
-	 * 根据属性名字获取其setter的方法名字
-	 * 
-	 * @param paramName
-	 *            属性名字
-	 * @return 该属性的setter方法名字
-	 */
 	public static String getMethodName(String paramName) {
 		if (paramName == null || paramName.length() <= 0)
 			throw new IllegalArgumentException("paramName can not be null.");
 		StringBuilder sb = new StringBuilder();
 		sb.append("set");
-		sb.append(paramName.substring(0, 1).toUpperCase()); // 首字母大写
+		sb.append(paramName.substring(0, 1).toUpperCase()); // 锟斤拷锟斤拷母锟斤拷写
 		if (paramName.length() > 1)
 			sb.append(paramName.substring(1));
 		return sb.toString();
 	}
 
-	/**
-	 * 通过反射获取相关实例
-	 * 
-	 * @param clazzName
-	 *            实例的完整类名
-	 * @param clazzInterface
-	 *            实例应该实现的接口
-	 * @return 声明该接口的实例
-	 */
 	@SuppressWarnings("unchecked")
 	public static <T> T getObject(String clazzName, Class<T> clazzInterface)
 			throws ReflectOpException {
@@ -51,12 +29,6 @@ public class ReflectUtil {
 		}
 	}
 
-	/**
-	 * 判断某类是否实现了某接口
-	 * @param c 类class
-	 * @param szInterface 接口名字
-	 * @return 
-	 */
 	public static boolean isInterface(Class<?> c, Class<?> szInterface) {
 		Class<?>[] face = c.getInterfaces();
 		for (int i = 0, j = face.length; i < j; i++) {

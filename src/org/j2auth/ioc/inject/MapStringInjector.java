@@ -9,10 +9,9 @@ import org.j2auth.util.ReflectUtil;
 import org.j2auth.util.XPath;
 import org.w3c.dom.Node;
 /**
- * 给实例注入Map结构信息:
  * 
  * <pre>
- * 用例：
+ * eg：
  * &lt;map-string name="xxx"&gt;
  *  &lt;entry key="xxx" value="xxx"/&gt;
  *  .
@@ -41,7 +40,6 @@ public class MapStringInjector extends AbstractInjector{
 			Method method = obj.getClass().getMethod(methodName, Map.class);
 			method.invoke(obj, entrys);
 		} catch (Exception e) {
-			//这里的信息提示有点少。。。。
 			throw new RuntimeException("can not inject map to obj.",e);
 		}
 		return obj;

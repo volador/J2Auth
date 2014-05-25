@@ -9,9 +9,9 @@ import org.j2auth.util.XPath;
 import org.w3c.dom.Node;
 
 /**
- * 注入list&lt;String&gt;
+ * inject list&lt;String&gt;
  * <pre>
- * 用例
+ * eg:
  * &lt;list-string name="xxx"&gt;
  *  &lt;value value="xxx"/&gt;
  *  .
@@ -51,7 +51,6 @@ public class ListStringInjector extends AbstractInjector{
 			Method method = obj.getClass().getMethod(methodName, List.class);
 			method.invoke(obj, list);
 		} catch (Exception e) {
-			//这里的信息提示有点少。。。。
 			throw new RuntimeException("can not inject list to obj.",e);
 		}
 		return obj;

@@ -14,19 +14,12 @@ import org.j2auth.util.XPath;
 import org.w3c.dom.Document;
 import org.w3c.dom.Node;
 
-/**
- * 注入器管理
- * 
- * @author volador
- * 
- */
+
 public class InjectorManager {
 
 	private Map<String, Class<? extends Injector>> injectors = new HashMap<String,Class<? extends Injector>>();
 
-	/*
-	 * 初始化injector列表
-	 */
+
 	@SuppressWarnings("unchecked")
 	public InjectorManager() {
 		InputStream stream = this.getClass().getResourceAsStream("injectors.xml");
@@ -60,22 +53,12 @@ public class InjectorManager {
 		return xmlDoc;
 	}
 
-	/**
-	 * 通过tag名字获取相对应的注入器,每次获取的，都是新的实例
-	 * 
-	 * @param tagName
-	 *            目前标签名字
-	 * @return 注入器实例
-	 */
 	public Injector getInjectorByExpectTag(String tagName,Node nodeInfo,String currentPath) {
 		Class<? extends Injector> injectorClass = injectors.get(tagName);
 		if(injectorClass == null) throw new RuntimeException("can not find out an injector[tagName="+tagName+"].");
 		return newInstance(injectorClass, nodeInfo,currentPath);
 	}
 
-	/*
-	 * 返回一个注入器的新实例
-	 */
 	private Injector newInstance(Class<? extends Injector> clazz,Node nodeInfo,String currentPath) {
 		Injector injector = null;
 		try {

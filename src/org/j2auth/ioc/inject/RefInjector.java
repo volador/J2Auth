@@ -9,7 +9,6 @@ import org.w3c.dom.Node;
 
 /**
  * <pre>
- * 给实例注入引用依赖，重点解决依赖链问题。type默认是Object
  * &lt;ref name="xxx" type="xxx"/&gt;
  * </pre>
  * @author volador
@@ -18,7 +17,6 @@ import org.w3c.dom.Node;
 public class RefInjector extends AbstractInjector{
 
 	public static final String TAG = "ref";
-	//需要注入的实例
 	private String refBeanName;
 	
 	private Class<?> type = Object.class;

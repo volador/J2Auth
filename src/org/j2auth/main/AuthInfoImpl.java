@@ -8,12 +8,6 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
-/**
- * AuthInfo接口的实现
- * 
- * @author volador
- * 
- */
 public class AuthInfoImpl implements AuthInfo {
 
 	private String account;
@@ -39,15 +33,12 @@ public class AuthInfoImpl implements AuthInfo {
 
 	@Override
 	public String getCookie(String name) {
-		//使用时才初始化cookie
+		//使锟斤拷时锟脚筹拷始锟斤拷cookie
 		if(this.cookies == null) fillCookie();
 		Cookie target = cookies.get(name);
 		return target == null ? null : target.getValue();
 	}
 	
-	/**
-	 * 初始化cookie
-	 */
 	private void fillCookie(){
 		this.cookies = new HashMap<String, Cookie>();
 		Cookie[] cs = this.request.getCookies();
