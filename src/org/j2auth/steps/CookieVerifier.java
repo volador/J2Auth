@@ -1,7 +1,7 @@
 package org.j2auth.steps;
 
+import org.j2auth.main.AuthChain; 
 import org.j2auth.main.AuthInfo;
-import org.j2auth.main.DutyChain;
 import org.j2auth.main.Step;
 import org.j2auth.util.Decoder;
 
@@ -24,7 +24,7 @@ public class CookieVerifier implements Step{
 	}
 	
 	@Override
-	public AuthInfo process(AuthInfo info, DutyChain chain) {
+	public AuthInfo process(AuthInfo info, AuthChain chain) {
 		if(isLogin(info)){
 			return chain.next(info);
 		}

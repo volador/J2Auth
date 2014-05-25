@@ -9,7 +9,7 @@ public class AuthManager implements Auth{
 	
 	static Map<String,Step> steps = new LinkedHashMap<String,Step>();
 
-	private static class ProviderChain implements DutyChain{
+	private static class ProviderChain implements AuthChain{
 		
 		static SaltatoryList<String,Step> list = new SaltatoryList<String,Step>(steps);
 		
@@ -45,7 +45,7 @@ public class AuthManager implements Auth{
 
 	@Override
 	public AuthInfo doAuth(AuthInfo info) {
-		DutyChain chain = new ProviderChain();
+		AuthChain chain = new ProviderChain();
 		return chain.next(info);
 	}
 }
