@@ -1,6 +1,6 @@
 package org.j2auth.main;
 
-public interface Step {
+public interface AuthFilter {
 
 	AuthInfo process(AuthInfo info,AuthChain chain);
 }

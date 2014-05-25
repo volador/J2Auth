@@ -7,7 +7,11 @@ import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
-
+/**
+ * 请求上下文实现
+ * @author volador
+ *
+ */
 public class AuthInfoImpl implements AuthInfo {
 
 	private String account;
@@ -33,7 +37,6 @@ public class AuthInfoImpl implements AuthInfo {
 
 	@Override
 	public String getCookie(String name) {
-		//ʹ��ʱ�ų�ʼ��cookie
 		if(this.cookies == null) fillCookie();
 		Cookie target = cookies.get(name);
 		return target == null ? null : target.getValue();

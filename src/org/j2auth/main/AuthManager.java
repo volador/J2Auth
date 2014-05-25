@@ -4,33 +4,37 @@ import java.util.LinkedHashMap;
 import java.util.Map;
 
 import org.j2auth.util.SaltatoryList;
-
+/**
+ * 权限管理器
+ * @author volador
+ *
+ */
 public class AuthManager implements Auth{
 	
-	static Map<String,Step> steps = new LinkedHashMap<String,Step>();
+	static Map<String,AuthFilter> filters = new LinkedHashMap<String,AuthFilter>();
 
 	private static class ProviderChain implements AuthChain{
 		
-		static SaltatoryList<String,Step> list = new SaltatoryList<String,Step>(steps);
+		static SaltatoryList<String,AuthFilter> list = new SaltatoryList<String,AuthFilter>(filters);
 		
-		private SaltatoryList.Node<Step> index = list.getHeader().next();
+		private SaltatoryList.Node<AuthFilter> index = list.getHeader().next();
 		
 		@Override
 		public AuthInfo next(AuthInfo info) {
 			if(index == null) return info;
-			Step step = index.getValue();
+			AuthFilter filter = index.getValue();
 			index = index.next();
-			return step.process(info,this);
+			return filter.process(info,this);
 		}
 		
 		@Override
 		public AuthInfo next(AuthInfo info, String nextProvider) {
-			SaltatoryList.Node<Step> node = list.getNode(nextProvider);
+			SaltatoryList.Node<AuthFilter> node = list.getNode(nextProvider);
 			if(node == null) return info;
 			index = node;
-			Step step = index.getValue();
+			AuthFilter filter = index.getValue();
 			index = index.next();
-			return step.process(info,this);
+			return filter.process(info,this);
 		}
 	}
 	
@@ -38,7 +42,7 @@ public class AuthManager implements Auth{
 	public void setProviders(Map<String,Object> providers){
 		if(providers != null && providers.size() > 0){
 			for(Map.Entry<String, Object> entry : providers.entrySet()){
-				AuthManager.steps.put(entry.getKey(), (Step)entry.getValue());
+				AuthManager.filters.put(entry.getKey(), (AuthFilter)entry.getValue());
 			}
 		}
 	}

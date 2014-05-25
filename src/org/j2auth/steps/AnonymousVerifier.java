@@ -1,10 +1,10 @@
 package org.j2auth.steps;
 
 import org.j2auth.main.AuthChain; 
+import org.j2auth.main.AuthFilter;
 import org.j2auth.main.AuthInfo;
-import org.j2auth.main.Step;
 
-public class AnonymousVerifier implements Step{
+public class AnonymousVerifier implements AuthFilter{
 
 	public static final String ANONYMOUS_ACCOUNT = "j_anonymous";
 	

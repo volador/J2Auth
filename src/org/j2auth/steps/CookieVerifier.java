@@ -1,11 +1,11 @@
 package org.j2auth.steps;
 
 import org.j2auth.main.AuthChain; 
+import org.j2auth.main.AuthFilter;
 import org.j2auth.main.AuthInfo;
-import org.j2auth.main.Step;
 import org.j2auth.util.Decoder;
 
-public class CookieVerifier implements Step{
+public class CookieVerifier implements AuthFilter{
 
 	public static final String USER_ACCOUNT = "j_c_user_account";
 	public static final String USER_PASSWORD = "j_c_user_password";
