@@ -5,7 +5,11 @@ import java.util.HashMap;
 import java.util.Map;
 
 import javax.servlet.ServletContext;
-
+/**
+ * 抽象BeanProvider，屏蔽接口复杂度
+ * @author volador
+ *
+ */
 public abstract class AbstractBeanProvider implements ServletContextAware,BeanProvider{
 	
 	private Map<String,String> initParams = new HashMap<String,String>();

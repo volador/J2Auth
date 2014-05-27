@@ -9,8 +9,9 @@ import org.j2auth.util.ReflectUtil;
 import org.j2auth.util.XPath;
 import org.w3c.dom.Node;
 /**
+ * 注入map引用
  *  <pre>
- *  eg��
+ *  eg
  *  &lt;map-ref name="xxx" type="xxxx"&gt;
  *    &lt;entry name="xxx" ref="xx"/&gt;
  *  &lt;/map-ref&gt;

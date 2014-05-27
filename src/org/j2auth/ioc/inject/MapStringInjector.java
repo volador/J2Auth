@@ -9,9 +9,9 @@ import org.j2auth.util.ReflectUtil;
 import org.j2auth.util.XPath;
 import org.w3c.dom.Node;
 /**
- * 
+ * 注入map的String键值对
  * <pre>
- * eg��
+ * eg
  * &lt;map-string name="xxx"&gt;
  *  &lt;entry key="xxx" value="xxx"/&gt;
  *  .

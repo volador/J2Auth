@@ -11,12 +11,17 @@ import org.j2auth.util.SaltatoryList;
  */
 public class AuthManager implements Auth{
 	
+	//过滤器列表
 	static Map<String,AuthFilter> filters = new LinkedHashMap<String,AuthFilter>();
-
-	private static class ProviderChain implements AuthChain{
-		
+	/**
+	 * 过滤链实现
+	 * @author volador
+	 *
+	 */
+	private static class FilterChain implements AuthChain{
+		//可以跳跃的链式结构
 		static SaltatoryList<String,AuthFilter> list = new SaltatoryList<String,AuthFilter>(filters);
-		
+		//链表头节点
 		private SaltatoryList.Node<AuthFilter> index = list.getHeader().next();
 		
 		@Override
@@ -49,7 +54,8 @@ public class AuthManager implements Auth{
 
 	@Override
 	public AuthInfo doAuth(AuthInfo info) {
-		AuthChain chain = new ProviderChain();
+		//开始链式处理
+		AuthChain chain = new FilterChain();
 		return chain.next(info);
 	}
 }

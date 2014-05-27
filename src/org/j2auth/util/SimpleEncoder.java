@@ -1,5 +1,9 @@
 package org.j2auth.util;
-
+/**
+ * 简单解密器实现
+ * @author volador
+ *
+ */
 public class SimpleEncoder implements Encoder{
 
 	private int charAciiMove = 1;

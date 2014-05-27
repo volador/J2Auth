@@ -1,4 +1,9 @@
 package org.j2auth.util;
+/**
+ * 加密器简单实现
+ * @author volador
+ *
+ */
 public class SimpleDecoder implements Decoder{
 
 	private int charAciiMove = 1;

@@ -8,6 +8,7 @@ import org.j2auth.util.XPath;
 import org.w3c.dom.Node;
 
 /**
+ * 注入实例引用
  * <pre>
  * &lt;ref name="xxx" type="xxx"/&gt;
  * </pre>

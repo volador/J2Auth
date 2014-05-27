@@ -5,7 +5,13 @@ import java.lang.reflect.Method;
 import org.j2auth.util.ReflectUtil;
 import org.j2auth.util.XPath;
 import org.w3c.dom.Node;
-
+/**
+ * 注入String
+ *eg: 
+ * &lt;string name="xxx" value="xxx"/>
+ * @author volador
+ *
+ */
 public class StringInjector extends AbstractInjector{
 
 	public static final String TAG = "string";

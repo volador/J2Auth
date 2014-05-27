@@ -14,14 +14,19 @@ import org.j2auth.util.XPath;
 import org.w3c.dom.Document;
 import org.w3c.dom.Node;
 
-
+/**
+ * 注入器管理者 负责初始化并维护注入链
+ * @author volador
+ *
+ */
 public class InjectorManager {
 
+	//注入器集合[expect tag name：class]
 	private Map<String, Class<? extends Injector>> injectors = new HashMap<String,Class<? extends Injector>>();
-
 
 	@SuppressWarnings("unchecked")
 	public InjectorManager() {
+		//注入器配置文件
 		InputStream stream = this.getClass().getResourceAsStream("injectors.xml");
 		if(stream == null) throw new RuntimeException(new FileNotFoundException("can not find injectors.xml"));
 		Document doc = getDocument(stream);
@@ -53,6 +58,13 @@ public class InjectorManager {
 		return xmlDoc;
 	}
 
+	/**
+	 * 根据tagname获取注入器实例，比如tagname=&lt;string>,则由StringInjector来处理
+	 * @param tagName 注入器关注的tag
+	 * @param nodeInfo bean.xml中bean定义节点信息
+	 * @param currentPath bean.xml中bean定义节点位置
+	 * @return 注入器实例
+	 */
 	public Injector getInjectorByExpectTag(String tagName,Node nodeInfo,String currentPath) {
 		Class<? extends Injector> injectorClass = injectors.get(tagName);
 		if(injectorClass == null) throw new RuntimeException("can not find out an injector[tagName="+tagName+"].");

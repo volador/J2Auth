@@ -16,17 +16,28 @@ import javax.servlet.http.HttpSession;
 
 import org.j2auth.util.ReflectOpException;
 import org.j2auth.util.ReflectUtil;
-
+/**
+ * 启动器
+ * @author volador
+ *
+ */
 public class StartFilter implements Filter {
-
-	public static final String BEAN_PROVIDER_PARAM_NAME = "BeanProvider";
-	public static final String AUTH_INFO_NAME_IN_SESSION = "auth_info";
-
+	//web.xml配置
+	private static final String BEAN_PROVIDER_PARAM_NAME = "BeanProvider";
+	//上下文在session中的key
+	private static final String AUTH_INFO_NAME_IN_SESSION = "authInfo";
+	//权控管理器bean在ioc容器中的名字
+	private static final String AUTH_PROCESSER_NAME_IN_IOC = "authManager";
+	
+	//默认的ioc容器
 	private static String DEFAULT_BEAN_PROVIDER = "org.j2auth.bootstrap.LocalIOCAdapter";
 
 	protected BeanProvider beanProvider = null;
 	protected Auth authManager = null;
-
+	
+	/**
+	 * 关闭bean容器
+	 */
 	public void destroy() {
 		if (beanProvider != null)
 			beanProvider.close();
@@ -34,11 +45,13 @@ public class StartFilter implements Filter {
 
 	public void doFilter(ServletRequest request, ServletResponse response,
 			FilterChain chain) throws IOException, ServletException {
+		//只针对http请求
 		if (request instanceof HttpServletRequest) {
 			HttpServletRequest req = (HttpServletRequest) request;
 			HttpServletResponse res = (HttpServletResponse) response;
 			HttpSession session = req.getSession(true);
 			
+			//权控执行
 			AuthInfo info = this.authManager.doAuth(new AuthInfoImpl(req,res));
 			
 			session.setAttribute(AUTH_INFO_NAME_IN_SESSION, info);
@@ -48,11 +61,14 @@ public class StartFilter implements Filter {
 			chain.doFilter(request, response);
 	}
 
+	/**
+	 * 初始化bean容器
+	 */
 	public void init(FilterConfig config) throws ServletException {
 
+		//可以在web.xml中更改ioc容器
 		String IOCContainer = config.getInitParameter(BEAN_PROVIDER_PARAM_NAME);
-		if (IOCContainer != null && IOCContainer.length() > 1)
-			DEFAULT_BEAN_PROVIDER = IOCContainer;
+		DEFAULT_BEAN_PROVIDER = (IOCContainer != null && IOCContainer.length() > 1) ? IOCContainer : DEFAULT_BEAN_PROVIDER;
 
 		try {
 			beanProvider = ReflectUtil.getObject(DEFAULT_BEAN_PROVIDER,
@@ -64,12 +80,17 @@ public class StartFilter implements Filter {
 		ServletContext context = config.getServletContext();
 		injectContext(context);
 
-		this.authManager = (Auth) beanProvider.getBean("authManager");
+		this.authManager = (Auth) beanProvider.getBean(AUTH_PROCESSER_NAME_IN_IOC);
 		if(this.authManager == null){
 			throw new RuntimeException("can't get AuthBean[name=authManager,type=org.j2auth.main.Auth] from beanProvider.");
 		}
 	}
 
+	/**
+	 * 看ioc容器是否需要注入ServletContext ：是否实现ServletContextAware接口
+	 * @see org.j2auth.main.ServletContextAware
+	 * @param context 注入的请求上下文
+	 */
 	private void injectContext(ServletContext context) {
 		Class<?> clazz = beanProvider.getClass();
 		if (ReflectUtil.isInterface(clazz, ServletContextAware.class)) {

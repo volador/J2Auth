@@ -7,11 +7,17 @@ import java.util.Map;
 
 import org.j2auth.ioc.fileloader.FileLoader;
 import org.j2auth.ioc.fileloader.InitParamsAware;
-
+/**
+ * BeanFactory抽象实现，准备好配置文件加载器。
+ * @author volador
+ *
+ */
 public abstract class AbstractBeansFactory implements BeanFactory{
 
+	//默认配置文件加载器
 	private static String DEFAULT_FILELOADER = "org.j2auth.ioc.fileloader.LocalConfigFileLoader";
-	private static final String FILE_LOADER_TAG = "file_loader";
+	//可以通过初始化参数改变文件加载器（web.xml中配置）
+	private static final String FILE_LOADER_TAG = "fileLoader";
 	
 	private Map<String,String> initParams = new HashMap<String,String>();
 	
@@ -41,6 +47,9 @@ public abstract class AbstractBeansFactory implements BeanFactory{
 		return fileLoader;
 	}
 	
+	/*
+	 * 初始化文件加载器
+	 */
 	private FileLoader initFileLoader() {
 		try {
 			Class<?> clazz = Class.forName(DEFAULT_FILELOADER);
@@ -53,6 +62,7 @@ public abstract class AbstractBeansFactory implements BeanFactory{
 			
 			Class<?>[] interfaces = clazz.getInterfaces();
 			for(Class<?> ifc : interfaces){
+				//给文件加载器注入初始化参数
 				if(ifc.equals(InitParamsAware.class)){
 					Method method = clazz.getMethod("setInitParams",Map.class);
 					method.invoke(obj, getInitParams());

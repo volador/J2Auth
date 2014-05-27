@@ -2,7 +2,13 @@ package org.j2auth.util;
 
 import java.util.HashMap;
 import java.util.Map;
-
+/**
+ * 过滤器链表结构
+ * @author volador
+ *
+ * @param <KEY> 节点key类型
+ * @param <VALUE> 节点value类型
+ */
 public class SaltatoryList<KEY,VALUE> {
 	
 	public static class Node<VALUE>{
