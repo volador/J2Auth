@@ -2,7 +2,7 @@
 <beans>
 	<!-- 总控制器 -->
 	<bean name="authManager" class="org.j2auth.main.AuthManager">
-		<map-ref nname="steps" type="org.j2auth.main.Step">
+		<map-ref name="authFilters" type="org.j2auth.main.AuthFilter">
 			<entry name="cookieVerifier" ref="cookieVerifier"/>
 			<entry name="anonymousVerifier" ref="anonymousVerifier"/>
 		</map-ref>

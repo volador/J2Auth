@@ -33,8 +33,8 @@ public class AuthManager implements Auth{
 		}
 		
 		@Override
-		public AuthInfo next(AuthInfo info, String nextProvider) {
-			SaltatoryList.Node<AuthFilter> node = list.getNode(nextProvider);
+		public AuthInfo next(AuthInfo info, String nextFilter) {
+			SaltatoryList.Node<AuthFilter> node = list.getNode(nextFilter);
 			if(node == null) return info;
 			index = node;
 			AuthFilter filter = index.getValue();
@@ -44,9 +44,9 @@ public class AuthManager implements Auth{
 	}
 	
 	//setter
-	public void setProviders(Map<String,Object> providers){
-		if(providers != null && providers.size() > 0){
-			for(Map.Entry<String, Object> entry : providers.entrySet()){
+	public void setAuthFilters(Map<String,Object> authFilters){
+		if(authFilters != null && authFilters.size() > 0){
+			for(Map.Entry<String, Object> entry : authFilters.entrySet()){
 				AuthManager.filters.put(entry.getKey(), (AuthFilter)entry.getValue());
 			}
 		}
