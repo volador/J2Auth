@@ -26,7 +26,7 @@ public class AuthManager implements Auth{
 		
 		@Override
 		public AuthContext next(AuthContext info) {
-			if(index == null) return info;
+			if(index == null) return info; 
 			AuthFilter filter = index.getValue();
 			index = index.next();
 			return filter.process(info,this);

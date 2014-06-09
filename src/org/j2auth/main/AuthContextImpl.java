@@ -68,4 +68,9 @@ public class AuthContextImpl implements AuthContext {
 			this.response.addCookie(c);
 		}
 	}
+	
+	@Override
+	public String toString() {
+		return this.account;
+	}
 }

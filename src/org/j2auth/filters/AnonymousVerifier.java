@@ -1,6 +1,6 @@
 package org.j2auth.filters;
 
-import org.j2auth.main.AuthChain; 
+import org.j2auth.main.AuthChain;  
 import org.j2auth.main.AuthFilter;
 import org.j2auth.main.AuthContext;
 /**
@@ -11,11 +11,11 @@ import org.j2auth.main.AuthContext;
 public class AnonymousVerifier implements AuthFilter{
 
 	//给匿名用户分配的帐号
-	public static final String ANONYMOUS_ACCOUNT = "j_anonymous";
+	public static final String ANONYMOUS_ACCOUNT = "j_auth_anonymous";
 	
 	@Override
 	public AuthContext process(AuthContext info, AuthChain chain) {
-		if(isAnonymous(info)){
+		if(!isAnonymous(info)){
 			return chain.next(info);
 		}
 		info.setAccount(ANONYMOUS_ACCOUNT);
@@ -23,7 +23,7 @@ public class AnonymousVerifier implements AuthFilter{
 	}
 	
 	/**
-	 * 判断session中是否有用户信息
+	 * 判断是不是匿名用户：session中是否有用户信息
 	 * @param info 上下文
 	 * @return true/false
 	 */

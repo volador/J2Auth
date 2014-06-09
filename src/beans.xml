@@ -9,15 +9,17 @@
 	</bean>
 
 	<!-- cookie验证 -->	
-	<bean name="cookieVerifier" class="org.j2auth.steps.CookieVerifier">
+	<bean name="cookieVerifier" class="org.j2auth.filters.CookieVerifier">
 		<ref name="decoder" type="org.j2auth.util.Decoder"/>
 		<!-- 还没实现 -->
-		<ref name="userService" type="org.j2auth.steps.UserService"/>
+		<ref name="userService" type="org.j2auth.filters.UserService"/>
 	</bean>
 	
 	<!-- cookie解密器 -->
 	<bean name="decoder" class="org.j2auth.util.SimpleDecoder"/>
 	
 	<!-- 处理匿名登录 -->
-	<bean name="anonymousVerifier" class="org.j2auth.steps.AnonymousVerifier"/>
+	<bean name="anonymousVerifier" class="org.j2auth.filters.AnonymousVerifier"/>
+	
+	<bean name="userService" class="org.j2auth.filters.UserServiceImpl"/>
 </beans>

@@ -1,6 +1,6 @@
 package org.j2auth.main;
 
-import java.io.IOException;
+import java.io.IOException; 
 import java.lang.reflect.Method;
 
 import javax.servlet.Filter;
@@ -67,11 +67,11 @@ public class StartFilter implements Filter {
 
 		//可以在web.xml中更改ioc容器
 		String IOCContainer = config.getInitParameter(BEAN_PROVIDER_PARAM_NAME);
-		DEFAULT_BEAN_PROVIDER = (IOCContainer != null && IOCContainer.length() > 1) ? IOCContainer : DEFAULT_BEAN_PROVIDER;
+		
+		IOCContainer = (IOCContainer != null && IOCContainer.length() > 1) ? IOCContainer : DEFAULT_BEAN_PROVIDER;
 
 		try {
-			beanProvider = ReflectUtil.getObject(DEFAULT_BEAN_PROVIDER,
-					BeanProvider.class);
+			beanProvider = ReflectUtil.getObject(IOCContainer,BeanProvider.class);
 		} catch (ReflectOpException e) {
 			throw new RuntimeException("auth's StartFilter init fail.", e);
 		}
