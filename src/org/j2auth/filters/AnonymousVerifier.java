@@ -2,7 +2,7 @@ package org.j2auth.filters;
 
 import org.j2auth.main.AuthChain; 
 import org.j2auth.main.AuthFilter;
-import org.j2auth.main.AuthInfo;
+import org.j2auth.main.AuthContext;
 /**
  * 匿名校验器：判断请求是否是匿名请求
  * @author volador
@@ -14,7 +14,7 @@ public class AnonymousVerifier implements AuthFilter{
 	public static final String ANONYMOUS_ACCOUNT = "j_anonymous";
 	
 	@Override
-	public AuthInfo process(AuthInfo info, AuthChain chain) {
+	public AuthContext process(AuthContext info, AuthChain chain) {
 		if(isAnonymous(info)){
 			return chain.next(info);
 		}
@@ -27,7 +27,7 @@ public class AnonymousVerifier implements AuthFilter{
 	 * @param info 上下文
 	 * @return true/false
 	 */
-	protected boolean isAnonymous(AuthInfo info){
+	protected boolean isAnonymous(AuthContext info){
 		return null == info.getAccount();
 	}
 }

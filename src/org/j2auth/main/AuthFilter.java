@@ -11,5 +11,5 @@ public interface AuthFilter {
 	 * @param chain 过滤链
 	 * @return 处理后的请求上下文
 	 */
-	AuthInfo process(AuthInfo info,AuthChain chain);
+	AuthContext process(AuthContext info,AuthChain chain);
 }

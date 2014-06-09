@@ -24,13 +24,12 @@ import org.j2auth.util.ReflectUtil;
 public class StartFilter implements Filter {
 	//web.xml配置
 	private static final String BEAN_PROVIDER_PARAM_NAME = "BeanProvider";
-	//上下文在session中的key
-	private static final String AUTH_INFO_NAME_IN_SESSION = "authInfo";
+	
 	//权控管理器bean在ioc容器中的名字
 	private static final String AUTH_PROCESSER_NAME_IN_IOC = "authManager";
 	
 	//默认的ioc容器
-	private static String DEFAULT_BEAN_PROVIDER = "org.j2auth.bootstrap.LocalIOCAdapter";
+	private static String DEFAULT_BEAN_PROVIDER = "org.j2auth.main.LocalIOCAdapter";
 
 	protected BeanProvider beanProvider = null;
 	protected Auth authManager = null;
@@ -52,9 +51,9 @@ public class StartFilter implements Filter {
 			HttpSession session = req.getSession(true);
 			
 			//权控执行
-			AuthInfo info = this.authManager.doAuth(new AuthInfoImpl(req,res));
+			AuthContext authContext = this.authManager.doAuth(new AuthContextImpl(req,res));
 			
-			session.setAttribute(AUTH_INFO_NAME_IN_SESSION, info);
+			session.setAttribute(AuthContext.SESSION, authContext);
 			
 			chain.doFilter(req, res);
 		} else

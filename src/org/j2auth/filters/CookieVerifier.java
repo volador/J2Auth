@@ -2,7 +2,7 @@ package org.j2auth.filters;
 
 import org.j2auth.main.AuthChain; 
 import org.j2auth.main.AuthFilter;
-import org.j2auth.main.AuthInfo;
+import org.j2auth.main.AuthContext;
 import org.j2auth.util.Decoder;
 /**
  * cookie校验器：若用户未登录，尝试从cookie中登录
@@ -32,7 +32,7 @@ public class CookieVerifier implements AuthFilter{
 	}
 	
 	@Override
-	public AuthInfo process(AuthInfo info, AuthChain chain) {
+	public AuthContext process(AuthContext info, AuthChain chain) {
 		if(isLogin(info)){
 			//如果已经登录，则不做处理，处理链往下
 			return chain.next(info);
@@ -67,7 +67,7 @@ public class CookieVerifier implements AuthFilter{
 	 * @param account 成功的帐号
 	 * @param info 上下文
 	 */
-	protected void cookieLoginSuccess(String account,AuthInfo info){
+	protected void cookieLoginSuccess(String account,AuthContext info){
 		info.setAccount(account);
 	}
 
@@ -75,7 +75,7 @@ public class CookieVerifier implements AuthFilter{
 		return value == null || value.length() == 0;
 	}
 	
-	protected boolean isLogin(AuthInfo info){
+	protected boolean isLogin(AuthContext info){
 		return null == info.getAccount();
 	}
 

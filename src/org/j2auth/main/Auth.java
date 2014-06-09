@@ -10,5 +10,5 @@ public interface Auth{
 	 * @param info 上下文
 	 * @return 带有校验信息的上下文
 	 */
-	AuthInfo doAuth(AuthInfo info);
+	AuthContext doAuth(AuthContext info);
 }

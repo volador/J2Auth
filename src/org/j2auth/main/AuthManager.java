@@ -25,7 +25,7 @@ public class AuthManager implements Auth{
 		private SaltatoryList.Node<AuthFilter> index = list.getHeader().next();
 		
 		@Override
-		public AuthInfo next(AuthInfo info) {
+		public AuthContext next(AuthContext info) {
 			if(index == null) return info;
 			AuthFilter filter = index.getValue();
 			index = index.next();
@@ -33,7 +33,7 @@ public class AuthManager implements Auth{
 		}
 		
 		@Override
-		public AuthInfo next(AuthInfo info, String nextFilter) {
+		public AuthContext next(AuthContext info, String nextFilter) {
 			SaltatoryList.Node<AuthFilter> node = list.getNode(nextFilter);
 			if(node == null) return info;
 			index = node;
@@ -53,7 +53,7 @@ public class AuthManager implements Auth{
 	}
 
 	@Override
-	public AuthInfo doAuth(AuthInfo info) {
+	public AuthContext doAuth(AuthContext info) {
 		//开始链式处理
 		AuthChain chain = new FilterChain();
 		return chain.next(info);
