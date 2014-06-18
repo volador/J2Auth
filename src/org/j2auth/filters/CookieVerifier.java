@@ -12,9 +12,9 @@ import org.j2auth.util.Decoder;
 public class CookieVerifier implements AuthFilter{
 
 	//用户帐号在cookie中的key
-	public static final String USER_ACCOUNT = "j_c_user_account";
+	public static final String USER_ACCOUNT = "j_auth_cookie_account_key";
 	//用户密码在cookie中的key
-	public static final String USER_PASSWORD = "j_c_user_password";
+	public static final String USER_PASSWORD = "j_auth_cookie_password_key";
 	
 	//存在cookie中的用户信息可能是经过加密的，需要配套解密器
 	private Decoder decoder = null;
@@ -76,7 +76,7 @@ public class CookieVerifier implements AuthFilter{
 	}
 	
 	protected boolean isLogin(AuthContext info){
-		return null == info.getAccount();
+		return null != info.getAccount();
 	}
 
 }
