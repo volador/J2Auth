@@ -39,11 +39,15 @@ public class AuthContextImpl implements AuthContext {
 
 	@Override
 	public String getCookie(String name) {
+		//初次调用填充cookie数组
 		if(this.cookies == null) fillCookie();
 		Cookie target = cookies.get(name);
 		return target == null ? null : target.getValue();
 	}
 	
+	/**
+	 * 填充cookie数组
+	 */
 	private void fillCookie(){
 		this.cookies = new HashMap<String, Cookie>();
 		Cookie[] cs = this.request.getCookies();
@@ -57,16 +61,23 @@ public class AuthContextImpl implements AuthContext {
 	@Override
 	public void setAccount(String account) {
 		this.account = account;
+		this.session.setAttribute(SESSION_ACCOUNT_KEY, account);
 	}
 
 	@Override
-	public void delCookie(String key) {
+	public void delCookieWithPath(String key, String path) {
 		Cookie c = this.cookies.get(key);
 		if(c != null){
 			c.setMaxAge(0);
-			c.setPath("/");
+			c.setPath(path);
 			this.response.addCookie(c);
 		}
+	}
+	
+	@Override
+	public void delCookie(String key) {
+		String path = "/";
+		this.delCookieWithPath(key, path);
 	}
 	
 	@Override

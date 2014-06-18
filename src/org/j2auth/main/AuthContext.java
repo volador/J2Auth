@@ -26,8 +26,14 @@ public interface AuthContext {
 	 */
 	void setAccount(String account);
 	/**
-	 * 删除cookie
+	 * 删除cookie，path默认值是根（/）
 	 * @param key cookie键
 	 */
 	void delCookie(String key);
+	/**
+	 * 删除cookie
+	 * @param key cookie键
+	 * @param path cookie的路径
+	 */
+	void delCookieWithPath(String key, String path);
 }
