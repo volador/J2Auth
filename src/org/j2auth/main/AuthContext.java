@@ -1,4 +1,7 @@
 package org.j2auth.main;
+
+import javax.servlet.http.HttpServletRequest;
+
 /**
  * 请求上下文接口
  * @author volador
@@ -8,6 +11,14 @@ public interface AuthContext {
 	
 	//auth上下文在session中的key
 	public static final String SESSION = "j_auth_session";
+	
+	//用户帐号在cookie中的key
+	public static final String COOKIE_USER_ACCOUNT = "j_auth_cookie_account_key";
+	//用户密码在cookie中的key
+	public static final String COOKIE_USER_PASSWORD = "j_auth_cookie_password_key";
+	
+	//给匿名用户分配的帐号
+	public static final String ANONYMOUS_ACCOUNT = "j_auth_anonymous";
 	
 	/**
 	 * 获取请求用户帐号
@@ -36,4 +47,33 @@ public interface AuthContext {
 	 * @param path cookie的路径
 	 */
 	void delCookieWithPath(String key, String path);
+	/**
+	 * 获取request
+	 * @return 请求的request实例
+	 */
+	HttpServletRequest getRequest();
+	/**
+	 * 清理上下文中用户信息[session&&cookie中的用户信息]
+	 */
+	void clear();
+	/**
+	 * 重定向到制定url
+	 * @param redirect 重定向的url
+	 */
+	void stopAndRedirect(String redirect);
+	/**
+	 * 是否需要重新跳转
+	 * @return true/false
+	 */
+	boolean needRedirect();
+	/**
+	 * 重新跳转的url
+	 * @return url
+	 */
+	String getRedirectUrl();
+	/**
+	 * 给上下文设置重新跳转url
+	 * @param url url
+	 */
+	void setRedirectUrl(String url);
 }

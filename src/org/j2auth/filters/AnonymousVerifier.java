@@ -9,16 +9,13 @@ import org.j2auth.main.AuthContext;
  *
  */
 public class AnonymousVerifier implements AuthFilter{
-
-	//给匿名用户分配的帐号
-	public static final String ANONYMOUS_ACCOUNT = "j_auth_anonymous";
 	
 	@Override
 	public AuthContext process(AuthContext info, AuthChain chain) {
 		if(!isAnonymous(info)){
 			return chain.next(info);
 		}
-		info.setAccount(ANONYMOUS_ACCOUNT);
+		info.setAccount(AuthContext.ANONYMOUS_ACCOUNT);
 		return chain.next(info);
 	}
 	

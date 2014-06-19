@@ -52,10 +52,13 @@ public class StartFilter implements Filter {
 			
 			//权控执行
 			AuthContext authContext = this.authManager.doAuth(new AuthContextImpl(req,res));
-			
 			session.setAttribute(AuthContext.SESSION, authContext);
 			
-			chain.doFilter(req, res);
+			if(authContext.needRedirect()){
+				res.sendRedirect(authContext.getRedirectUrl());
+			}else{
+				chain.doFilter(req, res);
+			}
 		} else
 			chain.doFilter(request, response);
 	}

@@ -1,5 +1,6 @@
 package org.j2auth.main;
 
+import java.io.IOException;
 import java.util.HashMap; 
 import java.util.Map;
 
@@ -21,6 +22,9 @@ public class AuthContextImpl implements AuthContext {
 	private HttpServletRequest request = null;
 	private HttpServletResponse response = null;
 	private HttpSession session = null;
+
+	private boolean redirectStatus = false;
+	private String redirectUrl = null;
 	
 	private static final String SESSION_ACCOUNT_KEY = "j_auth_session_account_key";
 	
@@ -66,6 +70,8 @@ public class AuthContextImpl implements AuthContext {
 
 	@Override
 	public void delCookieWithPath(String key, String path) {
+		//初次调用填充cookie数组
+		if(this.cookies == null) fillCookie();
 		Cookie c = this.cookies.get(key);
 		if(c != null){
 			c.setMaxAge(0);
@@ -81,7 +87,47 @@ public class AuthContextImpl implements AuthContext {
 	}
 	
 	@Override
+	public HttpServletRequest getRequest() {
+		return this.request;
+	}
+	
+	@Override
 	public String toString() {
 		return this.account;
+	}
+	
+	@Override
+	public void stopAndRedirect(String redirect) {
+		try {
+			this.response.sendRedirect(redirect);
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+	}
+
+	@Override
+	public void clear() {
+		//清理session
+		this.account = null;
+		this.session.removeAttribute(SESSION_ACCOUNT_KEY);
+		//清理cookie
+		this.delCookie(COOKIE_USER_ACCOUNT);
+		this.delCookie(COOKIE_USER_PASSWORD);
+	}
+	
+	@Override
+	public boolean needRedirect() {
+		return this.redirectStatus;
+	}
+	
+	@Override
+	public String getRedirectUrl() {
+		return this.redirectUrl;
+	}
+	
+	@Override
+	public void setRedirectUrl(String url) {
+		this.redirectStatus = true;
+		this.redirectUrl = url;
 	}
 }

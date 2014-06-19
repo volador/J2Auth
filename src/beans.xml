@@ -5,6 +5,7 @@
 		<map-ref name="authFilters" type="org.j2auth.main.AuthFilter">
 			<entry name="cookieVerifier" ref="cookieVerifier"/>
 			<entry name="anonymousVerifier" ref="anonymousVerifier"/>
+			<entry name="logout" ref="logoutProcesser"/>
 		</map-ref>
 	</bean>
 
@@ -20,6 +21,11 @@
 	
 	<!-- 处理匿名登录 -->
 	<bean name="anonymousVerifier" class="org.j2auth.filters.AnonymousVerifier"/>
+	
+	<!-- 登出处理 -->
+	<bean name="logoutProcesser" class="org.j2auth.filters.pass.LogoutProcesser">
+		<string name="redirect" value="http://www.baidu.com"/>
+	</bean>
 	
 	<bean name="userService" class="org.j2auth.filters.UserServiceImpl"/>
 </beans>

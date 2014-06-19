@@ -11,11 +11,6 @@ import org.j2auth.util.Decoder;
  */
 public class CookieVerifier implements AuthFilter{
 
-	//用户帐号在cookie中的key
-	public static final String USER_ACCOUNT = "j_auth_cookie_account_key";
-	//用户密码在cookie中的key
-	public static final String USER_PASSWORD = "j_auth_cookie_password_key";
-	
 	//存在cookie中的用户信息可能是经过加密的，需要配套解密器
 	private Decoder decoder = null;
 	
@@ -38,8 +33,8 @@ public class CookieVerifier implements AuthFilter{
 			return chain.next(info);
 		}
 		
-		String account = info.getCookie(USER_ACCOUNT);
-		String password = info.getCookie(USER_PASSWORD);
+		String account = info.getCookie(AuthContext.COOKIE_USER_ACCOUNT);
+		String password = info.getCookie(AuthContext.COOKIE_USER_PASSWORD);
 		
 		if(noValue(account) && noValue(password)){
 			//若没有相关cookie信息，不做处理，处理链往下
@@ -56,8 +51,8 @@ public class CookieVerifier implements AuthFilter{
 		if(result){
 			cookieLoginSuccess(account,info);
 		}else{
-			info.delCookie(USER_ACCOUNT);
-			info.delCookie(USER_PASSWORD);
+			info.delCookie(AuthContext.COOKIE_USER_ACCOUNT);
+			info.delCookie(AuthContext.COOKIE_USER_PASSWORD);
 		}
 		
 		return chain.next(info);
@@ -74,9 +69,14 @@ public class CookieVerifier implements AuthFilter{
 	private boolean noValue(String value){
 		return value == null || value.length() == 0;
 	}
-	
+	/**
+	 * 判断用户是否已经登录：session中有非匿名帐号
+	 * @param info 上下文
+	 * @return true/false
+	 */
 	protected boolean isLogin(AuthContext info){
-		return null != info.getAccount();
+		String sessionAccount = info.getAccount();
+		return sessionAccount != null && !sessionAccount.equals(AuthContext.ANONYMOUS_ACCOUNT);
 	}
 
 }
