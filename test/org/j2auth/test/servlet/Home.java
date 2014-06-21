@@ -53,8 +53,8 @@ public class Home extends HttpServlet {
 	}
 	
 	public void setcookie(HttpServletRequest req, HttpServletResponse res) throws IOException{
-		Cookie c_name = new Cookie(CookieVerifier.USER_ACCOUNT,"so.volador@gmail.com");
-		Cookie c_pass = new Cookie(CookieVerifier.USER_PASSWORD,(new SimpleEncoder()).encode("fuck_pass"));
+		Cookie c_name = new Cookie(AuthContext.COOKIE_USER_ACCOUNT,"so.volador@gmail.com");
+		Cookie c_pass = new Cookie(AuthContext.COOKIE_USER_PASSWORD,(new SimpleEncoder()).encode("fuck_pass"));
 		c_name.setPath("/");
 		c_pass.setPath("/");
 		res.addCookie(c_name);

@@ -1,5 +1,7 @@
 package org.j2auth.main;
 
+import java.util.Set;
+
 import javax.servlet.http.HttpServletRequest;
 
 /**
@@ -76,4 +78,34 @@ public interface AuthContext {
 	 * @param url url
 	 */
 	void setRedirectUrl(String url);
+	/**
+	 * 获取访问用户的checkpoint集合
+	 * @return checkpoint集合
+	 */
+	Set<String> getUserCheckPoints();
+	/**
+	 * 设置访问用户的checkpoint
+	 * @param checkPoints 访问用户的checkpoint集合
+	 */
+	void setUserCheckPoints(Set<String> checkPoints);
+	/**
+	 * 给访问用户添加一个checkpoint
+	 * @param checkPoint 检查点
+	 */
+	void setUserCheckPoint(String checkPoint);
+	/**
+	 * 获取访问资源的checkpoint
+	 * @return checkpoint集合
+	 */
+	Set<String> getResourceCheckPoints();
+	/**
+	 * 设置访问资源的checkpoint
+	 * @param checkPoints 访问资源的checkpoint集合
+	 */
+	void setResourceCheckPoints(Set<String> checkPoints);
+	/**
+	 * 个体访问资源添加一个checkpoint
+	 * @param checkPoint 检查点
+	 */
+	void setResourceCheckPoint(String checkPoint);
 }

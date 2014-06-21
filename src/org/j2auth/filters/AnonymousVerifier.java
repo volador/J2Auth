@@ -15,7 +15,10 @@ public class AnonymousVerifier implements AuthFilter{
 		if(!isAnonymous(info)){
 			return chain.next(info);
 		}
-		info.setAccount(AuthContext.ANONYMOUS_ACCOUNT);
+		//设置上下文
+		if(info.getAccount() == null){
+			info.setAccount(AuthContext.ANONYMOUS_ACCOUNT);
+		}
 		return chain.next(info);
 	}
 	
@@ -25,6 +28,6 @@ public class AnonymousVerifier implements AuthFilter{
 	 * @return true/false
 	 */
 	protected boolean isAnonymous(AuthContext info){
-		return null == info.getAccount();
+		return null == info.getAccount() || info.getAccount().equals(AuthContext.ANONYMOUS_ACCOUNT);
 	}
 }

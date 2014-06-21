@@ -28,7 +28,7 @@ public class CookieVerifier implements AuthFilter{
 	
 	@Override
 	public AuthContext process(AuthContext info, AuthChain chain) {
-		if(isLogin(info)){
+		if(hasLogin(info)){
 			//如果已经登录，则不做处理，处理链往下
 			return chain.next(info);
 		}
@@ -74,7 +74,7 @@ public class CookieVerifier implements AuthFilter{
 	 * @param info 上下文
 	 * @return true/false
 	 */
-	protected boolean isLogin(AuthContext info){
+	protected boolean hasLogin(AuthContext info){
 		String sessionAccount = info.getAccount();
 		return sessionAccount != null && !sessionAccount.equals(AuthContext.ANONYMOUS_ACCOUNT);
 	}

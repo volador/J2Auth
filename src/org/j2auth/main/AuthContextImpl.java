@@ -2,7 +2,9 @@ package org.j2auth.main;
 
 import java.io.IOException;
 import java.util.HashMap; 
+import java.util.HashSet;
 import java.util.Map;
+import java.util.Set;
 
 import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
@@ -25,6 +27,10 @@ public class AuthContextImpl implements AuthContext {
 
 	private boolean redirectStatus = false;
 	private String redirectUrl = null;
+
+	private Set<String> resourceCheckPoints = new HashSet<String>();
+
+	private Set<String> userCheckPoints = new HashSet<String>();
 	
 	private static final String SESSION_ACCOUNT_KEY = "j_auth_session_account_key";
 	
@@ -127,7 +133,40 @@ public class AuthContextImpl implements AuthContext {
 	
 	@Override
 	public void setRedirectUrl(String url) {
-		this.redirectStatus = true;
-		this.redirectUrl = url;
+		//后面的设置不能把前面覆盖
+		if(!this.redirectStatus){
+			this.redirectStatus = true;
+			this.redirectUrl = url;
+		}
+	}
+	
+	@Override
+	public Set<String> getResourceCheckPoints() {
+		return this.resourceCheckPoints;
+	}
+	
+	@Override
+	public Set<String> getUserCheckPoints() {
+		return this.userCheckPoints;
+	}
+	
+	@Override
+	public void setResourceCheckPoints(Set<String> checkPoints) {
+		this.resourceCheckPoints.addAll(checkPoints);
+	}
+	
+	@Override
+	public void setUserCheckPoints(Set<String> checkPoints) {
+		this.userCheckPoints.addAll(checkPoints);
+	}
+	
+	@Override
+	public void setUserCheckPoint(String checkPoint) {
+		this.userCheckPoints.add(checkPoint);
+	}
+	
+	@Override
+	public void setResourceCheckPoint(String checkPoint) {
+		this.resourceCheckPoints.add(checkPoint);
 	}
 }
