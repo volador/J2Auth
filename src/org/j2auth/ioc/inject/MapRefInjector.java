@@ -54,7 +54,7 @@ public class MapRefInjector extends AbstractInjector{
 	@Override
 	Object doInject(Object obj) {
 		initMap();
-		String methodName = ReflectUtil.getMethodName(name);
+		String methodName = ReflectUtil.setter(name);
 		try {
 			Method method = obj.getClass().getMethod(methodName, Map.class);
 			method.invoke(obj, map);

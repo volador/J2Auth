@@ -5,15 +5,21 @@
 		<map-ref name="authFilters" type="org.j2auth.main.AuthFilter">
 			<entry name="cookieVerifier" ref="cookieVerifier"/>
 			<entry name="anonymousVerifier" ref="anonymousVerifier"/>
+			<entry name="formLogin" ref="formLoginChecker"/>
 			<entry name="logout" ref="logoutProcesser"/>
 			<entry name="checkPointProcesser" ref="checkPointProcesser"/>
 			<entry name="judger" ref="judgeProcesser"/>
 		</map-ref>
 	</bean>
 	
+	<!-- 表单登录 -->
+	<bean name="formLoginChecker" class="org.j2auth.filters.pass.FormLoginChecker">
+		<ref name="userService" type="org.j2auth.filters.UserService"/>
+	</bean>
+	
 	<!-- 请求判决 -->
 	<bean name="judgeProcesser" class="org.j2auth.filters.JudgeProcesser">
-		<string name="loginPage" value="login"/>
+		<string name="loginPage" value="Login"/>
 		<string name="forbidenPage" value="forbiden"/>
 	</bean>
 	
@@ -21,7 +27,7 @@
 	<bean name="checkPointProcesser" class="org.j2auth.filters.CheckPointProcesser">
 		<ref name="userService" type="org.j2auth.filters.UserService"/>
 		<list-string name="openSource">
-			<value value="/login*"/>
+			<value value="/[lL]ogin*"/>
 			<value value="/forbiden*"/>
 			<value value="/Home*"/>
 		</list-string>

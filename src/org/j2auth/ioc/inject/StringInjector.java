@@ -31,7 +31,7 @@ public class StringInjector extends AbstractInjector{
 
 	@Override
 	Object doInject(Object obj) {
-		String methodName = ReflectUtil.getMethodName(name);
+		String methodName = ReflectUtil.setter(name);
 		try {
 			Method method = obj.getClass().getMethod(methodName, String.class);
 			method.invoke(obj, value);

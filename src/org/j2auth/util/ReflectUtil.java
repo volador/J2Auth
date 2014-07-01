@@ -5,21 +5,37 @@ package org.j2auth.util;
  *
  */
 public class ReflectUtil {
+	
 	/**
 	 * 获取属性set方法名字
 	 * @param paramName 属性名字
 	 * @return 完整set方法名字
 	 */
-	public static String getMethodName(String paramName) {
+	public static String setter(String paramName) {
+		return getterSetter(paramName, Method.SETTER);
+	}
+	/**
+	 * 获取属性set方法名字
+	 * @param paramName 属性名字
+	 * @return 完整set方法名字
+	 */
+	public static String getter(String paramName){
+		return getterSetter(paramName, Method.GETTER);
+	}
+	
+	private static String getterSetter(String paramName,Method topCase){
 		if (paramName == null || paramName.length() <= 0)
 			throw new IllegalArgumentException("paramName can not be null.");
+		
 		StringBuilder sb = new StringBuilder();
-		sb.append("set");
+		sb.append(topCase.toString());
 		sb.append(paramName.substring(0, 1).toUpperCase());
 		if (paramName.length() > 1)
 			sb.append(paramName.substring(1));
 		return sb.toString();
 	}
+	
+	
 
 	/**
 	 * 反射获取class实例
@@ -44,7 +60,7 @@ public class ReflectUtil {
 			throw new ReflectOpException(e);
 		}
 	}
-
+	
 	/**
 	 * 递归判断某类是否实现某接口
 	 * @param c 类class
@@ -71,5 +87,20 @@ public class ReflectUtil {
 			return isInterface(c.getSuperclass(), szInterface);
 		}
 		return false;
+	}
+}
+
+enum Method{
+	GETTER{
+		@Override
+		public String toString() {
+			return "get";
+		}
+	}
+	,SETTER{
+		@Override
+		public String toString() {
+			return "set";
+		}
 	}
 }

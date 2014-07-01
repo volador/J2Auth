@@ -53,8 +53,8 @@ public class Home extends HttpServlet {
 	}
 	
 	public void setcookie(HttpServletRequest req, HttpServletResponse res) throws IOException{
-		Cookie c_name = new Cookie(AuthContext.COOKIE_USER_ACCOUNT,"so.volador@gmail.com");
-		Cookie c_pass = new Cookie(AuthContext.COOKIE_USER_PASSWORD,(new SimpleEncoder()).encode("fuck_pass"));
+		Cookie c_name = new Cookie(AuthContext.COOKIE_USER_ACCOUNT,"zhangyu");
+		Cookie c_pass = new Cookie(AuthContext.COOKIE_USER_PASSWORD,(new SimpleEncoder()).encode("zhangyu"));
 		c_name.setPath("/");
 		c_pass.setPath("/");
 		res.addCookie(c_name);
@@ -66,6 +66,10 @@ public class Home extends HttpServlet {
 		HttpSession s = req.getSession(true);
 		AuthContext ac = (AuthContext) s.getAttribute(AuthContext.SESSION);
 		res.getWriter().println(ac);
+	}
+	
+	public void forword(HttpServletRequest req,HttpServletResponse res) throws ServletException, IOException{
+		req.getRequestDispatcher("login.jsp").forward(req, res);
 	}
 	
 	private Method getMethod(String methodName){

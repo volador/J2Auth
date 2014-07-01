@@ -46,7 +46,7 @@ public class RefInjector extends AbstractInjector{
 		BeanFactory factory = getBeanFactory();
 		Object refBean = factory.getBean(refBeanName);
 		if(refBean == null) throw new RuntimeException("can not get refBean[name="+refBeanName+"] from contain when init bean["+obj.getClass().getName()+"].");
-		String methodName = ReflectUtil.getMethodName(refBeanName);
+		String methodName = ReflectUtil.setter(refBeanName);
 		try {
 			Method method = obj.getClass().getMethod(methodName, type);
 			method.invoke(obj, refBean);

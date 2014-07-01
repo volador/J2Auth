@@ -46,7 +46,7 @@ public class ListStringInjector extends AbstractInjector{
 
 	@Override
 	protected Object doInject(Object obj) {
-		String methodName = ReflectUtil.getMethodName(name);
+		String methodName = ReflectUtil.setter(name);
 		try {
 			Method method = obj.getClass().getMethod(methodName, List.class);
 			method.invoke(obj, list);

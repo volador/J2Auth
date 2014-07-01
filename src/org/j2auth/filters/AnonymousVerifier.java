@@ -1,6 +1,6 @@
 package org.j2auth.filters;
 
-import org.j2auth.main.AuthChain;  
+import org.j2auth.main.AuthChain;
 import org.j2auth.main.AuthFilter;
 import org.j2auth.main.AuthContext;
 /**

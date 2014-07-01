@@ -5,7 +5,6 @@ import java.util.Set;
 import org.j2auth.main.AuthChain;
 import org.j2auth.main.AuthContext;
 import org.j2auth.main.AuthFilter;
-import org.j2auth.util.Debug;
 
 /**
  * 根据上下文信息，判决请求是否通过
@@ -20,23 +19,23 @@ public class JudgeProcesser implements AuthFilter {
 	private String forbidenPage = null;
 	
 	@Override
-	public AuthContext process(AuthContext info, AuthChain chain) {		
+	public AuthContext process(AuthContext info, AuthChain chain) {	
 		Set<String> userCheckPoints = info.getUserCheckPoints();
 		Set<String> resourceCheckPoints = info.getResourceCheckPoints();
-		if(!info.needRedirect() && !judgeLogic(userCheckPoints, resourceCheckPoints)){
+		if(!info.needDirect() && !judgeLogic(userCheckPoints, resourceCheckPoints)){
 			if(hasLogin(info)){
 				//default forbiden page is login page.
 				forbidenPage = forbidenPage != null ? forbidenPage : loginPage;
-				info.setRedirectUrl(forbidenPage);
+				info.directTo(forbidenPage);
 			}else{
-				info.setRedirectUrl(loginPage);
+				info.directTo(loginPage);
 			}
 		}
 		return chain.next(info);
 	}
 	
 	private boolean hasLogin(AuthContext info) {
-		return !info.getAccount().equals(AuthContext.ANONYMOUS_ACCOUNT);
+		return info.getAccount() != null && !info.getAccount().equals(AuthContext.ANONYMOUS_ACCOUNT);
 	}
 
 	/**
@@ -46,8 +45,8 @@ public class JudgeProcesser implements AuthFilter {
 	 * @return true/false
 	 */
 	protected boolean judgeLogic(Set<String> userCheckPoints, Set<String> resourceCheckPoints) {
-		Debug.show("user-cps:" + userCheckPoints);
-		Debug.show("resource-cps:" + resourceCheckPoints);
+//		Debug.show("user-cps:" + userCheckPoints);
+//		Debug.show("resource-cps:" + resourceCheckPoints);
 		boolean result = false;
 		//当资源不注册到checkpoint的时候，默认该资源是全封闭的[资源的悲观控制]
 		if(resourceCheckPoints != null && resourceCheckPoints.size() > 0){

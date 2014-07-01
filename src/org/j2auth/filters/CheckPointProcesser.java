@@ -31,7 +31,12 @@ public class CheckPointProcesser  implements AuthFilter{
 		//开绿灯的资源
 		boolean isOpenSource = false;
 		if(openSource.size() > 0){
-			String requestURI = info.getRequest().getRequestURI();
+			
+			String requestURI = "";
+			try {
+				requestURI = (String) info.get("requestURI");
+			} catch (Exception e) {e.printStackTrace();}
+			
 			for(Pattern p : openSource){
 				if(p.matcher(requestURI).find()){
 					info.setUserCheckPoint(OPEN_SOURCE_CHECKPOINT);

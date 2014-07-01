@@ -2,8 +2,6 @@ package org.j2auth.main;
 
 import java.util.Set;
 
-import javax.servlet.http.HttpServletRequest;
-
 /**
  * 请求上下文接口
  * @author volador
@@ -18,9 +16,17 @@ public interface AuthContext {
 	public static final String COOKIE_USER_ACCOUNT = "j_auth_cookie_account_key";
 	//用户密码在cookie中的key
 	public static final String COOKIE_USER_PASSWORD = "j_auth_cookie_password_key";
+	//cookie路径
+	public static final String COOKIE_PATH = "/";
+	//cookie生存时间：2周
+	public static final int COOKIE_MAX_AGE = 2 * 7 * 24 * 60 * 60;
 	
 	//给匿名用户分配的帐号
 	public static final String ANONYMOUS_ACCOUNT = "j_auth_anonymous";
+	
+	//重定向
+	public static final String DIRECT_URL = "direct_url";
+	public static final String DIRECT_TYPE = "direct_type";
 	
 	/**
 	 * 获取请求用户帐号
@@ -48,36 +54,38 @@ public interface AuthContext {
 	 * @param key cookie键
 	 * @param path cookie的路径
 	 */
-	void delCookieWithPath(String key, String path);
-	/**
-	 * 获取request
-	 * @return 请求的request实例
-	 */
-	HttpServletRequest getRequest();
+	void delCookie(String key, String path);
+	
+	
 	/**
 	 * 清理上下文中用户信息[session&&cookie中的用户信息]
 	 */
 	void clear();
 	/**
-	 * 重定向到制定url
-	 * @param redirect 重定向的url
-	 */
-	void stopAndRedirect(String redirect);
-	/**
 	 * 是否需要重新跳转
 	 * @return true/false
 	 */
-	boolean needRedirect();
+	boolean needDirect();
 	/**
-	 * 重新跳转的url
-	 * @return url
+	 * 以redirect形式跳转到制定url
+	 * @param url 制定url
 	 */
-	String getRedirectUrl();
+	void directTo(String url);
 	/**
-	 * 给上下文设置重新跳转url
-	 * @param url url
+	 * 用指定方式跳转到指定url，指定方式包括：forword/redirect
+	 * @param url 指定跳转url
+	 * @param type 指定方式，其中redirect为外部跳转/forword为内部跳转
 	 */
-	void setRedirectUrl(String url);
+	void directTo(String url, AuthDirect type);
+	/**
+	 * 获取跳转url
+	 */
+	String getDirectUrl();
+	/**
+	 * 获取跳转类型
+	 */
+	AuthDirect getDirectType();
+	
 	/**
 	 * 获取访问用户的checkpoint集合
 	 * @return checkpoint集合
@@ -108,4 +116,13 @@ public interface AuthContext {
 	 * @param checkPoint 检查点
 	 */
 	void setResourceCheckPoint(String checkPoint);
+	/**
+	 * 添加cookie
+	 * @param key cookie的key
+	 * @param value cookie的value
+	 */
+	void addCookie(String key, String value);
+	
+	Object get(String attribute, Object param) throws NoSuchAttributeException,GetAttributeException;
+	Object get(String paramName) throws NoSuchAttributeException, GetAttributeException;
 }

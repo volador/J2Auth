@@ -35,7 +35,7 @@ public class MapStringInjector extends AbstractInjector{
 
 	@Override
 	protected Object doInject(Object obj) {
-		String methodName = ReflectUtil.getMethodName(name);
+		String methodName = ReflectUtil.setter(name);
 		try {
 			Method method = obj.getClass().getMethod(methodName, Map.class);
 			method.invoke(obj, entrys);

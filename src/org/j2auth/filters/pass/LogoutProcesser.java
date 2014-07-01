@@ -27,7 +27,7 @@ public class LogoutProcesser implements AuthFilter{
 		if(checkRequest(info)){
 			//清空用户信息并设置跳转url
 			info.clear();
-			info.setRedirectUrl(redirect);
+			info.directTo(redirect);
 		}
 		return chain.next(info);
 	}
@@ -39,12 +39,29 @@ public class LogoutProcesser implements AuthFilter{
 	 */
 	protected boolean checkRequest(AuthContext info){
 		if(checkUrl.startsWith("/")){
+			String contextPath = "";
+			try {
+				contextPath = (String) info.get("contextPath");
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
+			String requestURI = "";
+			try {
+				requestURI = (String) info.get("requestURI");
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
 			//绝对路径
-			String path = info.getRequest().getContextPath() + checkUrl.substring(1);
-			return info.getRequest().getRequestURI().equals(path);
+			String path = contextPath + checkUrl.substring(1);
+			return requestURI.equals(path);
 		}else{
 			//相对路径
-			String path = info.getRequest().getServletPath();
+			String path = "";
+			try {
+				path = (String) info.get("servletPath");
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
 			return path.endsWith(checkUrl);
 		}
 	}

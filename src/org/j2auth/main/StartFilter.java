@@ -1,6 +1,6 @@
 package org.j2auth.main;
 
-import java.io.IOException; 
+import java.io.IOException;
 import java.lang.reflect.Method;
 
 import javax.servlet.Filter;
@@ -14,6 +14,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
+import org.j2auth.util.Debug;
 import org.j2auth.util.ReflectOpException;
 import org.j2auth.util.ReflectUtil;
 /**
@@ -54,8 +55,14 @@ public class StartFilter implements Filter {
 			AuthContext authContext = this.authManager.doAuth(new AuthContextImpl(req,res));
 			session.setAttribute(AuthContext.SESSION, authContext);
 			
-			if(authContext.needRedirect()){
-				res.sendRedirect(authContext.getRedirectUrl());
+			Debug.show(authContext);
+			
+			if(authContext.needDirect()){
+				String url = authContext.getDirectUrl();
+				switch (authContext.getDirectType()) {
+					case REDIRECT :res.sendRedirect(url);break;
+					case FORWORD :req.getRequestDispatcher(url).forward(req, res);break;
+				}
 			}else{
 				chain.doFilter(req, res);
 			}

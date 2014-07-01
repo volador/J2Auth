@@ -2,6 +2,7 @@ package org.j2auth.test.ioc;
 
 import static org.junit.Assert.*; 
 
+import java.lang.reflect.Method;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -37,5 +38,20 @@ public class TestRun {
 		assertNotNull(p);
 		String name = p.getName();
 		assertEquals("voladorzhang", name);
+	}
+	
+	@Test
+	public void testObjectMethod(){
+		Object o = new A();
+		Method[] ms = o.getClass().getDeclaredMethods();
+		for(Method m : ms){
+			System.out.println(m);
+		}
+	}
+}
+
+class A{
+	public void method(){
+		
 	}
 }
