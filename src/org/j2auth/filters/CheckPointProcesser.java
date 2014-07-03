@@ -61,7 +61,7 @@ public class CheckPointProcesser  implements AuthFilter{
 		this.userService = userService;
 	}
 	/**
-	 * 注入/解析 开放资源列表
+	 * 注入/解析 开放资源列表 url对应的正则
 	 * @param source 开放资源列表
 	 */
 	public void setOpenSource(List<String> source){

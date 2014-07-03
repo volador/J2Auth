@@ -33,18 +33,8 @@ public class FormLoginChecker implements AuthFilter{
 	public AuthContext process(AuthContext info, AuthChain chain) {
 		if(checkRequest(info)){
 			//获取account/password 并且校验
-			String account = "";
-			try {
-				account = (String) info.get("parameter",accountName);
-			} catch (Exception e) {
-				e.printStackTrace();
-			}
-			String password = "";
-			try {
-				password = (String) info.get("parameter",passwordName);
-			} catch (Exception e) {
-				e.printStackTrace();
-			}
+			String account = this.getParameter(accountName, info);
+			String password  = this.getParameter(passwordName, info);
 			//验证身份,并做跳转
 			if(userService.check(account,password)){
 				info.directTo(successGoTo);
@@ -63,42 +53,42 @@ public class FormLoginChecker implements AuthFilter{
 	 */
 	protected boolean checkRequest(AuthContext info){
 		if(expectTag != null){
-			String tag = null;
-			try {
-				tag = (String) info.get("parameter",TAG_NAME);
-			} catch (Exception e) {
-				e.printStackTrace();
-			}
-			if(tag == null || !tag.equals(expectTag)){
+			String tag = this.getParameter(TAG_NAME,info);
+			if(!tag.equals(expectTag)){
 				return false;
 			}
 		}
 		
 		if(formAction.startsWith("/")){
-			String contextPath = "";
-			try {
-				contextPath = (String) info.get("contextPath");
-			} catch (Exception e) {
-				e.printStackTrace();
-			}
-			String requestURI = "";
-			try {
-				requestURI = (String) info.get("requestURI");
-			} catch (Exception e) {
-				e.printStackTrace();
-			}
+			String contextPath = this.getAttribute("contextPath",info);
+			String requestURI = this.getAttribute("requestURI",info);
 			String path = contextPath + formAction.substring(1);
 			return requestURI.equals(path);
 		}else{
-			String servletPath = "";
-			try {
-				servletPath = (String) info.get("servletPath");
-			} catch (Exception e) {
-				e.printStackTrace();
-			}
+			String servletPath = this.getAttribute("servletPath",info);
 			String path = servletPath;
 			return path.endsWith(formAction);
 		}
+	}
+	
+	private String getParameter(String paramName, AuthContext context){
+		String param = "";
+		try {
+			param = (String) context.get("parameter", paramName);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return param;
+	}
+	
+	private String getAttribute(String attrName, AuthContext context){
+		String attr = "";
+		try {
+			attr = (String) context.get(attrName);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return attr;
 	}
 	
 	public void setUserService(UserService userService){

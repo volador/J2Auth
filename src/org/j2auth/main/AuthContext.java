@@ -122,7 +122,38 @@ public interface AuthContext {
 	 * @param value cookie的value
 	 */
 	void addCookie(String key, String value);
-	
-	Object get(String attribute, Object param) throws NoSuchAttributeException,GetAttributeException;
-	Object get(String paramName) throws NoSuchAttributeException, GetAttributeException;
+	/**
+	 * 统一上下文资源属性获取入口<br>
+	 * 在authcontext中，资源属性包括authcontext本身的属性，以及请求（request）本身的属性，注意：这些属性必须提供可访问的get方法。<br>
+	 * authcontext上下文资源属性被抽象成2种类型：<br>
+	 * <ul>
+	 * 	<li>单键值类型，抽象定义为：Object attributeName = attributeValue;</li>
+	 * <li>多键值类型，抽象定义为：Map&lt;Object[param-key],Object[param-value]&gt; attributeNme = attributeValue;</li>
+	 * <ul>
+	 * <br>
+	 * example:
+	 * <pre>
+	 *		获取上下文中的account属性（单键值类型）：
+	 *			<code>String account = (String)get("account");<code> 
+	 *		获取上下文中的请求传递过来的account值（多键值类型）：
+	 *			<code>String account = (String)get("parameter","account");</code>
+	 *		获取session（多键值类型）：
+	 *			<code> HttpSession session = (HttpSession)get("session",true);
+	 * </pre>
+	 * 
+	 * 该方法主要作用于多键值属性，用于获取多键值属性中对应键的值。
+	 * @param attribute 属性的名字
+	 * @param key 对应键
+	 * @return 键对应的值
+	 * @throws NoSuchAttributeException authcontext&request中都没有该属性（找不到该属性的开放get方法）
+	 * @throws GetAttributeException 获取属性值出错，无法访问该属性get方法。
+	 */
+	Object get(String attribute, Object key) throws NoSuchAttributeException,GetAttributeException;
+	/**
+	 * 该方法主要用于访问单键值属性
+	 * @param attribute 属性名字
+	 * @return 属性值
+	 * @ses get(String attribute, Object key)
+	 */
+	Object get(String attribute) throws NoSuchAttributeException, GetAttributeException;
 }
